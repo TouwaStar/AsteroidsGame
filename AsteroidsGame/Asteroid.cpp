@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Asteroid.h"
-
 Asteroid::Asteroid()
 {
 	speed = 0.5 +static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1-0.5))); // Randomize falling speed
@@ -10,9 +9,9 @@ Asteroid::Asteroid()
 	sizeY = 0.6 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1.4 - (0.6)))); // Add slight randomness to size height
 	rotationShift = -5 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (5 - (-5)))); // Randomize rotation
 
-	movement[0] = xShift; // X
-	movement[1] = speed; // Y
-	movement[2] = 0.0; // Z
+	movement.x = xShift; // X
+	movement.y = speed; // Y
+	movement.z = 0.0; // Z
 
 	positionY = 4; // Starting height (4 is offscreen because we don't want the asteroids to spawn on our eyes)
 	rotationX = rotationY = 0; // Current rotation
@@ -27,12 +26,12 @@ void Asteroid::move(float frameDelta)
 	if (positionY < -4 -h)
 		outOfBounds = true;
 	
-	positionX += movement[0] * frameDelta;
-	positionY -= movement[1] * frameDelta;
+	positionX += movement.x * frameDelta;
+	positionY -= movement.y * frameDelta;
 	rotationX += rotationShift * frameDelta;
 }
 
-void Asteroid::drawSelf()
+void Asteroid::drawSelf() const
 {
 	
 	glTranslatef(positionX, positionY, -8);

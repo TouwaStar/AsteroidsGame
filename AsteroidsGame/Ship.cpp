@@ -1,15 +1,6 @@
 #include "stdafx.h"
 #include "Ship.h"
 
-bool Ship::canShoot()
-{
-	if (glfwGetTime() - lastTimeShoot > shootCooldown) {
-		lastTimeShoot = glfwGetTime();
-		return true;
-	}
-	return false;
-}
-
 Ship::Ship()
 {
 	goRight = goLeft = shoot = false;
@@ -20,7 +11,7 @@ Ship::Ship()
 	h = 0.1; // Height
 	d = 0.2; // Depth
 	shootCooldown = 0.5f;
-	lastTimeShoot = -5.0;
+	lastTimeShot = -5.0;
 	spawnBullet = false; // Should a bullet be spawned in the next update
 
 }
@@ -35,12 +26,12 @@ Ship::Ship(float sSpeed)
 	h = 0.1; // Height
 	d = 0.2; // Depth
 	shootCooldown = 0.5f;
-	lastTimeShoot = -5.0;
+	lastTimeShot = -5.0;
 	spawnBullet = false; // Should a bullet be spawned in the next update
 		
 }
 
-void Ship::drawSelf()
+void Ship::drawSelf() const
 {
 	glTranslatef(positionX, positionY, -8);
 
@@ -106,15 +97,16 @@ void Ship::drawSelf()
 	
 }
 
-
-
-
 void Ship::move(float frameDelta)
 {
 	if (goLeft && positionX > -3) 
 		positionX -= speed*frameDelta;
 	if (goRight && positionX <3) 
 		positionX += speed*frameDelta;
-	if (shoot && canShoot()) 
+	/* Check if the player pressed spacebar, if spacebar has been pressed check if enough ammount of time has passed since the last shot 
+	If yes, set lastTimeShot to current time and switch the spawnBullet flag */
+	if (shoot && (glfwGetTime() - lastTimeShot > shootCooldown)) {
+		lastTimeShot = glfwGetTime();
 		spawnBullet = true;
+	}
 }

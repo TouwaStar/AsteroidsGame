@@ -1,17 +1,15 @@
 #pragma once
 #include "stdafx.h"
-
-class Ship {
-	float speed;
+#include "GameObject.h"
+class Ship : public GameObject 
+{
+private:
 	float shootCooldown; // Determines the cooldown between shots
-	float lastTimeShoot; // Last time a bullet was shot
-	bool canShoot(); // Returns true or false depending on whether a bullet can be spawned
+	float lastTimeShot; // Last time a bullet was shot
 public:
 	Ship();
 	Ship( float sSpeed);
-	void drawSelf();
-	float positionX, positionY;
-	float w, h, d; // Width height and depth of the ship
+	void drawSelf() const;
 	void move(float frameDelta);
 	bool goRight;
 	bool goLeft;

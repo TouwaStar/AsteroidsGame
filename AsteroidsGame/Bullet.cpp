@@ -1,8 +1,5 @@
 #include "stdafx.h"
 #include "Bullet.h"
-
-
-
 Bullet::Bullet(float x, float y)
 {
 	positionX = x;
@@ -14,7 +11,7 @@ Bullet::Bullet(float x, float y)
 	outOfBounds = false;
 }
 
-void Bullet::drawSelf()
+void Bullet::drawSelf() const
 {
 
 	glTranslatef(positionX, positionY, -8);
